@@ -1,22 +1,21 @@
-import axios from "axios";
-import Vue from "vue";
+import axios from 'axios';
+// import Vue from 'vue';
 
-// import { message } from "ant-design-vue";
+import { message } from 'ant-design-vue';
 
 // 配置
 axios.defaults.timeout = 60000;
-axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
-// axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_BASEURL : '/api';
-axios.defaults.baseURL = process.env.VUE_APP_API_BASEURL;
+axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
+axios.defaults.baseURL = 'http://127.0.0.1:3000';
 // axios.defaults.withCredentials = true;
 
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use((config) => {
   const newConfig = {
     ...config,
     headers: {
       ...config.headers,
-      Authorization: Vue.ls.get("authorization")
-    }
+      // Authorization: Vue.ls.get('authorization'),
+    },
   };
   return newConfig;
 });
@@ -30,27 +29,32 @@ axios.interceptors.request.use(config => {
  * @param config axios 配置
  * @returns {Promise<any>}
  */
-export default function fetch(url, params, method = "post", config = {}) {
+export default function fetch(url, params, method = 'post', config = {}) {
   return new Promise((resolve, reject) => {
     let requestData = params;
     if (!params) {
       requestData = {};
     }
     axios[method](url, requestData, {
-      ...config
+      ...config,
     }).then(
-      response => {
+      (response) => {
         if (response.status === 200) {
-          resolve(response.data);
+          if (response.data.code === 0) {
+            message.error(response.data.msg);
+            reject(response);
+          } else {
+            resolve(response.data);
+          }
         } else {
-          // message.error(response.data.msg);
+          message.error(response.data.msg);
           reject(response);
         }
       },
-      err => {
-        // message.error("前端请求出错");
+      (err) => {
+        message.error('前端请求出错');
         reject(err);
-      }
+      },
     );
   });
 }

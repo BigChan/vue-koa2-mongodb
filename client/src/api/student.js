@@ -1,11 +1,11 @@
-import fetch from "./fetch";
+import fetch from './fetch';
 
-// 登录用户信息
-export function getUserInfo() {
-  return fetch("/account/me", {}, "get");
+// 插入信息
+export function createStudent(params) {
+  return fetch('/api/student/add', params);
 }
 
 // 用户登录
 export function login(params) {
-  return fetch("/account/login", params);
+  return fetch('/account/login', params);
 }

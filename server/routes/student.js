@@ -1,17 +1,12 @@
 const Router = require('koa-router')
 var router = new Router()
 
-const controller = require('../controller')
+const student = require('../controller/student')
 
 router
-  .get('/api/student/list', async (ctx, next) => {
-    ctx.body = {
-      title: 'product json',
-    }
-  })
-  .post('/api/addcar', controller.car.add) // 添加汽车
-  .get('/api/getinfo', controller.car.find) // 查询汽车信息
-  .get('/api/deletecar/:id', controller.car.delcar) // 删除汽车信息 (有参数路由问题)
-// .get("/api/deletecar", controller.car.delcar)  // 删除汽车信息 (有参数路由问题)
+  .get('/api/student/list', student.find)
+  .post('/api/student/add', student.add) // 添加汽车
+  .get('/api/student/detail/:id', student.find) // 查询汽车信息
+  .get('/api/student/delete/:id', student.delete) // 删除汽车信息 (有参数路由问题)
 
 module.exports = router
