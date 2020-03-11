@@ -3,10 +3,10 @@ var mongoose = require('./index.js'),
   Schema = mongoose.Schema
 
 let StudentSchema = new Schema({
-  sid: { type: String, unique: true },
+  sid: { type: Number, unique: true },
   name: { type: String },
   create_time: {
-    type: String,
+    type: Number,
     default: Date.now,
   },
 })

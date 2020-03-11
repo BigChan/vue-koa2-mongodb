@@ -6,7 +6,7 @@ const student = require('../controller/student')
 router
   .get('/api/student/list', student.find)
   .post('/api/student/add', student.add) // 添加汽车
-  .get('/api/student/detail/:id', student.find) // 查询汽车信息
-  .get('/api/student/delete/:id', student.delete) // 删除汽车信息 (有参数路由问题)
+  .get('/api/student/delete/:id', student.delete) // 删除汽车信息
+  .post('/api/student/update', student.update) // 删除汽车信息
 
 module.exports = router
